@@ -3,11 +3,12 @@
 
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-class player
+
+class Player
 {
 public:
-	player(int HEIGHT);
-	~player();
+	Player(int HEIGHT);
+	~Player();
 	void DrawPlayer();
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
@@ -26,6 +27,9 @@ private:
 	int boundy;
 	int score;
 	int damageLvl;
+	static const char* shipDamage[7];
 	ALLEGRO_BITMAP* image;
+	ALLEGRO_BITMAP* dmgImage;
+	ALLEGRO_BITMAP* heartsImage;
 };
 #endif

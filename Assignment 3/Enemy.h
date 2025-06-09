@@ -1,6 +1,7 @@
 #ifndef ENEMYH
 #define ENEMYH
-//#include "player.h"
+#include "Player.h"
+
 class Enemy
 {
 public:
@@ -8,7 +9,7 @@ public:
 	~Enemy();
 	void DrawEnemy();
 	void StartEnemy(int WIDTH, int HEIGHT);
-	void UpdateEnemy();
+	void UpdateEnemy(Player* myPlayer);
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	int getX() { return x; }
@@ -23,7 +24,7 @@ private:
 	int boundx;
 	int boundy;
 	static const char* EnemyFleet[5];
-
 	ALLEGRO_BITMAP* image;
+	
 };
 #endif
