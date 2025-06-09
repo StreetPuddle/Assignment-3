@@ -1,25 +1,26 @@
 #pragma once
+#include <vector>
+
+struct Bullet {
+    float x, y;
+    float dx, dy;
+};
 class Cannon
 {
 public:
-	Cannon(int W, int H);
-	~Cannon();
-	void DrawEnemy();
-	void UpdateCannon();
-	int getBoundX() { return boundx; }
-	int getBoundY() { return boundy; }
-	int getX() { return x; }
-	int getY() { return y; }
-	bool getLive() { return live; }
-	void setLive(bool l) { live = l; }
+    Cannon(int W, int H);
+    ~Cannon();
+    void rotateLeft();
+    void rotateRight();
+    void Draw();
+    void Update(int screenWidth, int screenHeight);
+    void Fire();
+
 private:
-	int x;
-	int y;
-	bool live;
-	int speed;
-	int boundx;
-	int boundy;
-
-	ALLEGRO_BITMAP* image;
+    int x, y;
+    int boundx, boundy;
+    float angle;
+    ALLEGRO_BITMAP* image;
+    ALLEGRO_BITMAP* bullet;
+    std::vector<Bullet> bullets;
 };
-

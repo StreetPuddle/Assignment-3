@@ -10,14 +10,13 @@ int main()
     const float FPS = 60;
     const int screenWidth = 850;
     const int screenHeight = 1000;
-    const int speed = 4;
+    bool redraw = true;
+    bool keyLeft = false;
+    bool keyRight = false;
 
     ALLEGRO_DISPLAY* display = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
-
-    bool redraw = true;
-
     ALLEGRO_BITMAP* bgImage = NULL;
 
     if (!al_init())
@@ -53,8 +52,10 @@ int main()
     al_flip_display();
     al_start_timer(timer);                                             //starts the timer
 
-    const int MAX_ENEMIES = 5;
+    const int MAX_ENEMIES = 8;
     Enemy enemies[MAX_ENEMIES];
+    player myPlayer(screenHeight);
+    Cannon myCannon(screenWidth, screenHeight);
 
     while (1) {
         ALLEGRO_EVENT ev;
@@ -65,27 +66,50 @@ int main()
                 enemies[i].StartEnemy(screenWidth, screenHeight);
                 enemies[i].UpdateEnemy();
             }
+            myCannon.Update(screenWidth, screenHeight);
+            if (keyLeft) {
+                myCannon.rotateLeft();
+            }
+            else if (keyRight) {
+                myCannon.rotateRight();
+            }
             redraw = true;
         }
         else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
             break;
         }
         else if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-            //directionCase(ev.keyboard.keycode, ship_DX, ship_DY, angle, speed);//movement function
+            if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT) {//continuous rotation
+                keyLeft = true;
+                //myCannon.rotateLeft();
+            }
+            else if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT) {//continuous rotation
+                keyRight = true;
+                //myCannon.rotateRight();
+            }
+
+            if (ev.keyboard.keycode == ALLEGRO_KEY_SPACE) {
+                myCannon.Fire();
+            }
+        }
+        else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
+            if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT) {
+                keyLeft = false;
+            }
+            else if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT) {
+                keyRight = false;
+            }
         }
 
         if (redraw && al_is_event_queue_empty(event_queue)) {//renders the graphics
             redraw = false;
-
-            al_clear_to_color(al_map_rgb(0, 0, 0));
-            player myPlayer(screenHeight);
-            Cannon myCannon(screenWidth, screenHeight);
+            
             al_draw_scaled_bitmap(bgImage, 0, 0, al_get_bitmap_width(bgImage), al_get_bitmap_height(bgImage), 0, 0, screenWidth, screenHeight, 0);
             for (int i = 0; i < MAX_ENEMIES; i++) {
                 enemies[i].DrawEnemy();
             }
             myPlayer.DrawPlayer();
-            myCannon.DrawCannon();
+            myCannon.Draw();
             al_flip_display();
         }
     }

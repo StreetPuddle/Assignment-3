@@ -19,21 +19,11 @@ player::player(int HEIGHT)
 	boundy = al_get_bitmap_height(image);
 	score = 0;
 }
+
+//renders main ship
 void player::DrawPlayer()
 {
 	al_draw_bitmap(image, x, y, 0);
-}
-void player::MoveLeft()
-{
-	//x -= speed;
-	if (x < 0)
-		x = 0;
-}
-void player::MoveRight()
-{
-	//x += speed;
-	if (x > 300)
-		x = 300;
 }
 
 //decrements lives, and sets sprite to next damaged sprite within the array

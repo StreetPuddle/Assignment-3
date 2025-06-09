@@ -9,10 +9,6 @@ public:
 	player(int HEIGHT);
 	~player();
 	void DrawPlayer();
-	void MoveUp();
-	void MoveDown(int HEIGHT);
-	void MoveLeft();
-	void MoveRight();
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	int getX() { return x; }
