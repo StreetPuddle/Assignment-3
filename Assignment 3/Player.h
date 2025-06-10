@@ -25,7 +25,6 @@ private:
 	int bulletSpeed;
 	int boundx;
 	int boundy;
-	int score;
 	int damageLvl;
 	static const char* shipDamage[7];
 	ALLEGRO_BITMAP* image;

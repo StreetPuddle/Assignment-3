@@ -1,6 +1,6 @@
-#include <allegro5\allegro.h>
-#include <allegro5\allegro_primitives.h>
-#include <allegro5\allegro_image.h>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
 #include "Enemy.h"
 #include "Player.h"

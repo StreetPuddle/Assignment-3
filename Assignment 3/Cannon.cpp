@@ -1,6 +1,6 @@
-#include <allegro5\allegro.h>
-#include <allegro5\allegro_primitives.h>
-#include <allegro5\allegro_image.h>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
 #include "Cannon.h"
 #include "Enemy.h"
@@ -40,8 +40,6 @@ void Cannon::drawCannon()
 {
 	for (Bullet& b : bullets) {//rendering bulelts
 		if (b.live) {
-			int bulletW = al_get_bitmap_width(bullet);
-			int bulletH = al_get_bitmap_height(bullet);
 			al_draw_bitmap(bullet, b.x - bulletW / 2, b.y - bulletH / 2, 0);
 		}
 	}
@@ -69,11 +67,11 @@ void Cannon::rotateRight() {
 }
 
 //updates bullets visual trajectory and detects when a bullets reaches the screen bounds
-void Cannon::updateCannon(int screenWidth, int screenHeight)
+void Cannon::updateCannonShots(int screenWidth, int screenHeight)
 {
 	for (Bullet& b : bullets) {//loop to update each bullets location
-		b.x += b.dx;
-		b.y += b.dy;
+		b.x += b.dirX;
+		b.y += b.dirY;
 	}
 	for (int i = 0; i < bullets.size(); i++) {
 		Bullet& b = bullets[i];
@@ -83,7 +81,7 @@ void Cannon::updateCannon(int screenWidth, int screenHeight)
 	}
 }
 
-//Creates a bullet, to be shot from the tip of cannon in the desired direction
+//creates a bullet, to be shot from the tip of cannon in the desired direction
 void Cannon::fireCannon()
 {
 	float bulletSpeed = 8.0f;

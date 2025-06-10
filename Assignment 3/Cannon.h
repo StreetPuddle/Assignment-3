@@ -4,9 +4,10 @@
 
 struct Bullet {
     float x, y;
-    float dx, dy;
+    float dirX, dirY;
     bool live = true;
 };
+
 class Cannon
 {
 public:
@@ -15,7 +16,7 @@ public:
     void rotateLeft();
     void rotateRight();
     void drawCannon();
-    void updateCannon(int screenWidth, int screenHeight);
+    void updateCannonShots(int screenWidth, int screenHeight);
     void fireCannon();
     void killedEnemy(Enemy* enemies, int numEnemies);
     int getHits(){ return hits; }

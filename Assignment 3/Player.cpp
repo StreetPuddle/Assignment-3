@@ -1,6 +1,6 @@
-#include <allegro5\allegro.h>
-#include <allegro5\allegro_primitives.h>
-#include <allegro5\allegro_image.h>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_image.h>
 #include <allegro5/allegro_native_dialog.h>
 #include "Player.h"
 
@@ -26,7 +26,6 @@ Player::Player(int HEIGHT)
 	damageLvl = 0;//alligns with sprite array index
 	boundx = al_get_bitmap_width(image);
 	boundy = al_get_bitmap_height(image);
-	score = 0;
 }
 
 //Player deconstructor
@@ -49,9 +48,7 @@ void Player::drawPlayer()
 	al_draw_bitmap(image, x, y, 0);
 }
 
-
-
-//draws sprites at bottom of screen to represent lives left
+//draws sprites at top of screen to represent lives left
 void Player::drawHUD(ALLEGRO_FONT* font, int hits) {
 
 	int spaced = 10;

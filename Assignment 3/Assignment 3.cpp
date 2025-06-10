@@ -104,7 +104,7 @@ int main()
                 enemies[i].startEnemy(screenWidth, screenHeight);
                 enemies[i].updateEnemy(&myPlayer);
             }
-            myCannon.updateCannon(screenWidth, screenHeight);
+            myCannon.updateCannonShots(screenWidth, screenHeight);
             myCannon.killedEnemy(enemies, MAX_ENEMIES);
             if (keyLeft) {
                 myCannon.rotateLeft();
@@ -149,7 +149,7 @@ int main()
                 printStartScreen(menuImage, font1, font2, screenWidth, screenHeight);
                 while (true) {
                     al_wait_for_event(event_queue, &ev);
-                    if (ev.type == ALLEGRO_EVENT_KEY_DOWN || ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {//any key to continue
+                    if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {//any key to continue
                         startMenu = false;
                         break;
                     }
