@@ -9,14 +9,14 @@ class Player
 public:
 	Player(int HEIGHT);
 	~Player();
-	void DrawPlayer();
+	void drawPlayer();
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	int getX() { return x; }
 	int getY() { return y; }
 	int getLives() { return lives; }
 	void removeLife();
-	void drawLives(ALLEGRO_FONT* font, int hits);
+	void drawHUD(ALLEGRO_FONT* font, int hits);
 
 private:
 	int x;

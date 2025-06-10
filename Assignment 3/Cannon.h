@@ -14,9 +14,9 @@ public:
     ~Cannon();
     void rotateLeft();
     void rotateRight();
-    void Draw();
-    void Update(int screenWidth, int screenHeight);
-    void Fire();
+    void drawCannon();
+    void updateCannon(int screenWidth, int screenHeight);
+    void fireCannon();
     void killedEnemy(Enemy* enemies, int numEnemies);
     int getHits(){ return hits; }
 

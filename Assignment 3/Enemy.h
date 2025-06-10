@@ -7,19 +7,22 @@ class Enemy
 public:
 	Enemy();
 	~Enemy();
-	void DrawEnemy();
-	void StartEnemy(int WIDTH, int HEIGHT);
-	void UpdateEnemy(Player* myPlayer);
+	void drawEnemy();
+	void startEnemy(int WIDTH, int HEIGHT);
+	void updateEnemy(Player* myPlayer);
 	int getBoundX() { return boundx; }
 	int getBoundY() { return boundy; }
 	int getX() { return x; }
 	int getY() { return y; }
 	bool getLive() { return live; }
 	void setLive(bool l) { live = l; }
+	bool getSpecial() { return special; }
+
 private:
 	int x;
 	int y;
 	bool live;
+	bool special;
 	int speed;
 	int boundx;
 	int boundy;

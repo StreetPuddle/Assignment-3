@@ -1,7 +1,7 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
 #include <allegro5\allegro_image.h>
-#include <cmath>
+#include <allegro5/allegro_native_dialog.h>
 #include "Cannon.h"
 #include "Enemy.h"
 
@@ -13,7 +13,15 @@ Cannon::Cannon(int WIDTH, int HEIGHT)
 	angle = 0.0f;
 	hits = 0;
 	image = al_load_bitmap("CANNON.png");
+	if (!image) {
+		al_show_native_message_box(nullptr, "ERROR", "Cannon constructor", "Could not load bullet.png", nullptr, 0);
+		exit(1);
+	}
 	bullet = al_load_bitmap("bullet.png");
+	if (!bullet) {
+		al_show_native_message_box(nullptr, "ERROR", "Cannon constructor", "Could not load bullet.png", nullptr, 0);
+		exit(1);
+	}
 	boundx = al_get_bitmap_width(image);
 	boundy = al_get_bitmap_height(image);
 	bulletW = al_get_bitmap_width(bullet);
@@ -28,7 +36,7 @@ Cannon::~Cannon()
 }
 
 //renders the cannon and bullets
-void Cannon::Draw()
+void Cannon::drawCannon()
 {
 	for (Bullet& b : bullets) {//rendering bulelts
 		if (b.live) {
@@ -43,18 +51,25 @@ void Cannon::Draw()
 	al_draw_rotated_bitmap(image, centerX, pivotY, x, y, angle, 0);
 }
 
-//increases the angle of the canonon
+//increases the angle of the canonon up to -60 degrees
 void Cannon::rotateLeft() {
 	angle -= 0.05f;
+	if (angle < -ALLEGRO_PI / 3) {
+		angle = -ALLEGRO_PI / 3;
+		//printf("Angle: %d", angle);//testing
+	}
 }
 
-//increases the angle of the canonon
+//increases the angle of the canonon up to 60 degrees
 void Cannon::rotateRight() {
 	angle += 0.05f;
+	if (angle > ALLEGRO_PI / 3) {
+		angle = ALLEGRO_PI / 3;
+	}
 }
 
 //updates bullets visual trajectory and detects when a bullets reaches the screen bounds
-void Cannon::Update(int screenWidth, int screenHeight)
+void Cannon::updateCannon(int screenWidth, int screenHeight)
 {
 	for (Bullet& b : bullets) {//loop to update each bullets location
 		b.x += b.dx;
@@ -62,14 +77,14 @@ void Cannon::Update(int screenWidth, int screenHeight)
 	}
 	for (int i = 0; i < bullets.size(); i++) {
 		Bullet& b = bullets[i];
-		if (b.x < 0 || b.x > screenWidth || b.y < 0 || b.y > screenHeight) {//removes bullet if out of bounds of screen
+		if (b.x < 0 || b.x > screenWidth || b.y < 64 || b.y > screenHeight) {//removes bullet if out of bounds of screen
 			bullets.erase(bullets.begin() + i);
 		}
 	}
 }
 
 //Creates a bullet, to be shot from the tip of cannon in the desired direction
-void Cannon::Fire()
+void Cannon::fireCannon()
 {
 	float bulletSpeed = 8.0f;
 	float angleAdjusted = angle - ALLEGRO_PI / 2;
@@ -94,9 +109,14 @@ void Cannon::killedEnemy(Enemy* enemies, int numEnemies) {
 					if (!(b.x > enemies[i].getX() + enemies[i].getBoundX() || b.x + bulletW < enemies[i].getX() ||
 						b.y > enemies[i].getY() + enemies[i].getBoundY() || b.y + bulletH < enemies[i].getY())) {//collision with enemy bounds
 
-						b.live = false;
-						enemies[i].setLive(false);
-						hits++;
+						b.live = false;//destroys bullet
+						if (enemies[i].getSpecial()) {//increments hits(score keeper)
+							hits += 5;
+						}
+						else {
+							hits++;
+						}
+						enemies[i].setLive(false);//destroys enemy
 						break;
 					}
 				}
